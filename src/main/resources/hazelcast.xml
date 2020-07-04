@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config
+                               http://www.hazelcast.com/schema/config/hazelcast-config-4.0.xsd"
+           xmlns="http://www.hazelcast.com/schema/config">
+
+    <cluster-name>dev-cluster</cluster-name>
+
+    <properties>
+        <!-- https://docs.hazelcast.org/docs/latest/manual/html-single/#system-properties -->
+        <property name="hazelcast.diagnostics.enabled">false</property>
+        <property name="hazelcast.backpressure.enabled">false</property>
+        <property name="hazelcast.operation.backup.timeout.millis">60000</property>
+    </properties>
+
+    <!-- for strong consistency, you have to run 3 instances at least -->
+    <!--<cp-subsystem>
+        <cp-member-count>3</cp-member-count>
+    </cp-subsystem>-->
+
+    <network>
+        <port>7700</port>
+        <join>
+            <multicast enabled="true">
+                <multicast-group>224.2.2.3</multicast-group>
+                <multicast-port>54327</multicast-port>
+            </multicast>
+        </join>
+    </network>
+
+    <flake-id-generator name="idGenerator">
+        <prefetch-count>100</prefetch-count>
+        <prefetch-validity-millis>600000</prefetch-validity-millis>
+        <node-id-offset>0</node-id-offset>
+        <statistics-enabled>true</statistics-enabled>
+    </flake-id-generator>
+
+</hazelcast>
